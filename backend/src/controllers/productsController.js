@@ -1,4 +1,6 @@
 import Product from "../models/products.js"; // Modelo de productos
+
+
 import HttpResponses from "../traits/HttpResponses.js"; // manejador de respuestas HTTP
 
 const productsController = {}; // objeto controlador para productos
