@@ -1,6 +1,5 @@
 import Product from "../models/products.js"; // Modelo de productos
 
-
 import HttpResponses from "../traits/HttpResponses.js"; // manejador de respuestas HTTP
 
 const productsController = {}; // objeto controlador para productos
@@ -11,11 +10,9 @@ productsController.getProducts = async (req, res) => {
     const products = await Product.find(); // obtenemos todos los productos
     return HttpResponses.ok(res, products, "Productos obtenidos correctamente"); // respondemos con los productos y mensaje de éxito
   } catch (error) {
-    return HttpResponses.serverError( // manejamos errores inesperados con un 500
-      res,
-      "Error al obtener los productos",
-      error.message,
-    );
+     // manejamos errores inesperados con un 500
+       console.log("error" + error)
+     return res.status(500).json({message: "Internal server error"});
   }
 };
 
@@ -28,11 +25,9 @@ productsController.getProductById = async (req, res) => {
     }
     return HttpResponses.ok(res, product, "Producto obtenido correctamente"); // respondemos con el producto y mensaje de éxito
   } catch (error) {
-    return HttpResponses.serverError( // manejamos errores inesperados con un 500
-      res,
-      "Error al obtener el producto",
-      error.message,
-    );
+    // manejamos errores inesperados con un 500
+     console.log("error" + error)
+     return res.status(500).json({message: "Internal server error"});
   }
 };
 
@@ -44,18 +39,11 @@ productsController.postProduct = async (req, res) => {
     const savedProduct = await newProduct.save(); // guardamos el producto
 
     if (savedProduct) { // si se guardó correctamente, respondemos con un 201
-      return HttpResponses.created(
-        res,
-        savedProduct,
-        "Producto creado correctamente",
-      );
+   return res.status(201).json({message: "producto creado correctamente"});
     }
   } catch (error) { // manejamos errores inesperados con un 500
-    return HttpResponses.serverError(
-      res,
-      "Error al crear el producto",
-      error.message,
-    );
+   console.log("error" + error)
+   return res.status(500).json({message: "error al crear el producto"});
   }
 };
 
@@ -67,20 +55,14 @@ productsController.putProduct = async (req, res) => {
       req.validatedBody, // datos validados para actualizar el producto
       { new: true }, // opción para devolver el documento actualizado en lugar del original
     );
-    if (!updatedProduct) { // si no existe el producto, respondemos con un 404
-      return HttpResponses.notFound(res, "Producto no encontrado");
+    if (!updatedProduct) {// si no existe el producto, respondemos con un 404
+       return res.status(404).json({message: "producto no encontrado"});
     }
-    return HttpResponses.ok( // respondemos con el producto actualizado y mensaje de éxito
-      res,
-      updatedProduct,
-      "Producto actualizado correctamente",
-    );
+     // respondemos con el producto actualizado y mensaje de éxito
+      return res.status(200).json({message: "producto actualizado exitosamente"});
   } catch (error) {
-    return HttpResponses.serverError( // manejamos errores inesperados con un 500
-      res,
-      "Error al actualizar el producto",
-      error.message,
-    );
+    console.log("error" + error)
+    return res.status(500).json({message: "Internal server error"});
   }
 };
 
@@ -88,19 +70,14 @@ productsController.deleteProduct = async (req, res) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id); // eliminamos el producto por ID
     if (!deletedProduct) { // si no existe el producto, respondemos con un 404
-      return HttpResponses.notFound(res, "Producto no encontrado");
+     return res.status(404).json({message: "producto no encontrado"});
     }
-    return HttpResponses.ok( // respondemos con el producto eliminado y mensaje de éxito
-      res,
-      deletedProduct,
-      "Producto eliminado correctamente",
-    );
+    // respondemos con el producto eliminado y mensaje de éxito
+    return res.status(200).json({message: "producto eliminado exitosamente"});
   } catch (error) {
-    return HttpResponses.serverError( // manejamos errores inesperados con un 500
-      res,
-      "Error al eliminar el producto",
-      error.message,
-    );
+   // manejamos errores inesperados con un 500
+   console.log("error" + error)
+     return res.status(500).json({message: "Internal server error"});
   }
 };
 
