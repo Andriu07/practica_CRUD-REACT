@@ -69,6 +69,7 @@ loginController.logout = async (req, res) => {
     return HttpResponses.ok(res, null, "Logout exitoso");
   } catch (error) {
     return HttpResponses.serverError(
+      res,
       "Error interno del servidor",
       error.message,
     );
@@ -79,7 +80,3 @@ export default loginController; // exportamos el controlador para usarlo en las 
 
 
 
-
-//console.log("error" + error)
-return res.status(500).json({message:"Internal server error"})
-      
