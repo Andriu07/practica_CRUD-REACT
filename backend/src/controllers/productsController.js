@@ -34,7 +34,7 @@ productsController.getProductById = async (req, res) => {
 // Controlador para manejar la ruta POST /api/products
 productsController.postProduct = async (req, res) => {
   try {
-    const { name, description, price, stock } = req.validatedBody; // obtenemos los datos
+    const { name, description, price, stock } = req.body; // obtenemos los datos
     const newProduct = new Product({ name, description, price, stock }); // creamos una nueva instancia del producto con los datos recibidos
     const savedProduct = await newProduct.save(); // guardamos el producto
 
@@ -43,7 +43,7 @@ productsController.postProduct = async (req, res) => {
     }
   } catch (error) { // manejamos errores inesperados con un 500
    console.log("error" + error)
-   return res.status(500).json({message: "error al crear el producto"});
+   return res.status(500).json({message: "Internal server error"});
   }
 };
 

@@ -43,6 +43,7 @@ app.use("/api/login", loginRoutes);
 app.use("/api/logout", logoutRoutes);
 app.use("/api/refresh", refreshRoutes);
 app.use("/api/products", productsRoutes);
+app.use("/api/products/:id", productsRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/register", registerUsersRoutes);
 app.use("/api/password-recovery", passwordRecoveryRoutes);
